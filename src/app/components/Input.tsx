@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BOTTOMTEXT } from "../constants/constants";
 import { useMessageFetching } from "../context/MessageFetch";
 import { send } from "./Icons";
@@ -8,6 +8,7 @@ type InputProps = {
   input: string;
   setInput: (value: string) => void;
   inputRef: React.RefObject<HTMLDivElement>;
+  socket: any;
 };
 
 export default function Input({
@@ -15,6 +16,7 @@ export default function Input({
   input,
   setInput,
   inputRef,
+  socket,
 }: InputProps) {
   const {
     messageFetching,
@@ -171,7 +173,9 @@ export default function Input({
 
       {messageFetching && (
         <button
-          onClick={stopFetching}
+          onClick={() => {
+            stopFetching(socket);
+          }}
           style={{
             position: "absolute",
             bottom: "18vh",

@@ -36,6 +36,13 @@ io.on("connection", (socket) => {
     console.log("S2", program.pid);
   });
 
+  socket.on("stopResponding", () => {
+    console.log("E1", program.pid);
+    program.kill();
+    program = null;
+    socket.emit("chatend");
+  });
+
   socket.on("message", (message) => {
     console.log("M1", program.pid);
     program.stdin.write(message + "\n");
